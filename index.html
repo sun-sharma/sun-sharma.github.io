@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>SOSCON - Home Edge</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+  <style>
+    mark {
+      font-size: 13px;
+      color: blue;
+      }
+  </style>
+</head>
+
+<body>
+
+  <!-- ======= Header ======= ====== -->
+    <section id="details" class="details">
+      <div class="container">
+
+        <div class="row content">
+          <div class="col-md-4" data-aos="fade-right">
+            <img src="assets/img/details-1.png" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-8 pt-4" data-aos="fade-up">
+            <h3>Setting Up Home Edge</h3>
+            <p class="fst-italic">
+              Follow the simple steps to set up home edge on a linux machine, Incase you have another machine please do check our github page for instructions.
+            </p>
+            <ul>
+
+              <li><i class="bi bi-check"></i> Install docker-ce : Version: 17.09
+              (or above) &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+              &nbsp<a class="btn btn-outline-info"
+              href="https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/"
+              role="button">How to Setup Docker</a></li> <li><i class="bi
+              bi-check"></i> Add $USER to docker group <br><code>$ sudo usermod
+              -aG docker $USER</code></li> <li><i class="bi bi-check"></i>
+              Restart/Log-Out to help the changes take place</li> <li><i
+              class="bi bi-check"></i> Install the Go Compiler - Version: 1.15
+              (or above)   &nbsp &nbsp &nbsp &nbsp &nbsp<a class="btn
+              btn-outline-info" href="https://golang.org/dl/" role="button">How
+              to Setup GoLang</a></li> <li><i class="bi bi-check"></i> Setup
+              GOROOT and GOPATH <br><code>$ export GOPATH=$HOME/go</code>
+              <br><code>$ export PATH=$PATH:$GOPATH/bin</code> </li> <li><i
+              class="bi bi-check"></i> Install Extra Utilities <br><code>$ sudo
+              apt-get install tree jq</code></li> <li><i class="bi
+              bi-check"></i> Download Source Code of HomeEdge <br><code>$ git
+              clone
+              https://github.com/lf-edge/edge-home-orchestration-go.git</code></li>
+              <li><i class="bi bi-check"></i> Build and Run the Code <br><code>$
+              ./build.sh</code></li> </ul> <p> Yipee !! We are now all set and
+              running. </p> </div> </div>
+
+        <div class="row content">
+          <div class="col-md-4 order-1 order-md-2" data-aos="fade-left">
+            <img src="assets/img/details-2.png" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-8 pt-5 order-2 order-md-1" data-aos="fade-up">
+            <h3>Service Offloading Walkthrough</h3>
+            <p class="fst-italic">
+              Let us now run a simple hello-world container and offload it using HomeEdge.
+            </p>
+            <ul>
+              <li><i class="bi bi-check"></i> Let us see the logs of the running container that we just built.<br><code>$ sudo docker logs edge-orchestration -f</code></li>
+              <li><i class="bi bi-check"></i> Now Let us repeat the same process in a seprate system, conected to the same WiFi / Network to simulate a home.</li>
+              <li><i class="bi bi-check"></i>Now that we have 2 systems running HomeEdge, and we can also see the logs of both of the system. Open another terminal in any one of the system and call the offloading API<br><code>$ curl -X POST http://localhost:56001/api/v1/orchestration/services --data '{ "ServiceName": "hello-world", "ServiceInfo": [{ "ExecutionType": "container", "ExecCmd":[ "docker", "run", "-v", "/var/run:/var/run:rw", "hello-world"]}], "StatusCallbackURI": "http://localhost:8888/api/v1/services/notification","SelfSelection":"false","ServiceRequester":"curl"}'</code></li>
+              <li><i class="bi bi-check"></i>Check the logs of the other system and see the container getting pulled from the repository and run.</li>
+            </ul>
+            <p>
+              All done, Now you can run any service on any machine !!
+            </p>
+          </div>
+        </div>
+
+        <div class="row content">
+          <div class="col-md-4" data-aos="fade-right">
+            <img src="assets/img/details-3.png" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-8 pt-5" data-aos="fade-up">
+            <h3>How to store and access data using Home Edge</h3>
+            <p>In this Walkthrough we would be understanding that how devices can store sensor data in data storage. We would also be understanding how to configure devices.</p>
+            <ul>
+              <li><i class="bi bi-check"></i> We can configure the YAML and TOML files or use them directly as given. But let's first move them to <mark>/var/edge-orchestration/datastorage/</mark> <br><code>$ cd configs/datastorage</code> <br><code>$ sudo cp configuration.toml  datastorage-device.yaml /var/edge-orchestration/datastorage/
+</code></li>
+              <li><i class="bi bi-check"></i> Now that we have our configs in place lets move to <mark>/deployments/datastorage/</mark> and run the docker compose file to run datastorage on a machine<br><code>$ sudo docker logs edge-orchestration -f</code></li>
+              <li><i class="bi bi-check"></i> Build and Run Home Edge <br><code>$ ./build.sh</code></li>
+              <li><i class="bi bi-check"></i> Now lets open another terminal and use our POST API to store some data. <br><code>$ curl --location --request POST 'http://localhost:49986/api/v1/resource/datastorage/string' --header 'Content-Type: text/plain' --data-raw 'Hello World'</code></li>
+              <li><i class="bi bi-check"></i> Now let us fetch the value we have stored <br><code>$ curl --location --request GET 'http://localhost:49986/api/v1/resource/datastorage/string' </code></li>
+              <li><i class="bi bi-check"></i> Also, incase you want to see all the data that you have stored from a device goto <br><code>http://localhost:48080/api/v1/event/device/datasto/10</code></li>
+            </ul>
+            <p>
+              Additionally you can store Integers, Float, String, JSON, PNG, JPEG data also. Try that !!
+            </p>
+          </div>
+        </div>
+
+        <div class="row content">
+          <div class="col-md-4 order-1 order-md-2" data-aos="fade-left">
+            <img src="assets/img/details-4.png" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-8 pt-5 order-2 order-md-1" data-aos="fade-up">
+            <h3>Using the sollution with a heirchy or routers.</h3>
+            <p class="fst-italic">
+              MNEDC will work like a charm ! Once set up service offloading would work as it was normally working under the same NAT.
+            </p>
+            <p>
+              To simulate the setup, Take an additional router and connect it to the main router. Connect one system to the main router and other to the sub router.
+            </p>
+            <ul>
+              <li><i class="bi bi-check"></i> Just run the following command to run the MNEDC server on the device connected to main NAT: <br><code>./build.sh mnedcserver </code><br> Note that there should be only one device running the MNEDC Server in the network.</li>
+              <li><i class="bi bi-check"></i>On the sub NAT machine edit the <mark>client-config.yaml</mark> file inside <mark>/configs/mnedc/</mark> directory and put the IP address of the device which is running the MNEDC server.</li>
+              <li><i class="bi bi-check"></i>Copy this <mark>client-config.yaml</mark> file to <mark>/var/edge-orchestration/mnedc</mark> folder. <br><code>sudo cp client-config.yaml /var/edge-orchestration/mnedc</code></li>
+              <li><i class="bi bi-check"></i>Run the following command on the client <br><code>./build.sh mnedcclient</code></li>
+            </ul>
+            <p>
+              You are all set ! Now try offloading services to the other machine in the same way as described in the earlier demo.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Details Section -->
+
+    <div class="container py-4">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Appland</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/free-bootstrap-app-landing-page-template/ -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
