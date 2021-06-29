@@ -37,7 +37,21 @@
 <body>
 
   <!-- ======= Header ======= ====== -->
+  <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">SOSCON - Home Edge Orchestration</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="index.html">Home</a>
+        <a class="nav-item nav-link" href="https://github.com/sun-sharma/sun-sharma.github.io/raw/main/offloading.mp4">Service Offloading Demo</a>
+        <a class="nav-item nav-link" href="https://github.com/sun-sharma/sun-sharma.github.io/raw/main/datastorage.mp4">Data Storage Demo</a>
+      </div>
+    </div>
+  </nav>
     <section id="details" class="details">
+
       <div class="container">
 
         <div class="row content">
@@ -105,11 +119,11 @@
             <ul>
               <li><i class="bi bi-check"></i> We can configure the YAML and TOML files or use them directly as given. But let's first move them to <mark>/var/edge-orchestration/datastorage/</mark> <br><code>$ cd configs/datastorage</code> <br><code>$ sudo cp configuration.toml  datastorage-device.yaml /var/edge-orchestration/datastorage/
 </code></li>
-              <li><i class="bi bi-check"></i> Now that we have our configs in place lets move to <mark>/deployments/datastorage/</mark> and run the docker compose file to run datastorage on a machine<br><code>$ sudo docker logs edge-orchestration -f</code></li>
+              <li><i class="bi bi-check"></i> Now that we have our configs in place lets move to <mark>/deployments/datastorage/</mark> and run the docker compose file to run datastorage on a machine<br><code>$ docker-compose up -d</code></li>
               <li><i class="bi bi-check"></i> Build and Run Home Edge <br><code>$ ./build.sh</code></li>
               <li><i class="bi bi-check"></i> Now lets open another terminal and use our POST API to store some data. <br><code>$ curl --location --request POST 'http://localhost:49986/api/v1/resource/datastorage/string' --header 'Content-Type: text/plain' --data-raw 'Hello World'</code></li>
               <li><i class="bi bi-check"></i> Now let us fetch the value we have stored <br><code>$ curl --location --request GET 'http://localhost:49986/api/v1/resource/datastorage/string' </code></li>
-              <li><i class="bi bi-check"></i> Also, incase you want to see all the data that you have stored from a device goto <br><code>http://localhost:48080/api/v1/event/device/datasto/10</code></li>
+              <li><i class="bi bi-check"></i> Also, incase you want to see all the data that you have stored from a device goto <br><code>http://localhost:48080/api/v1/event/device/datastorage/10</code></li>
             </ul>
             <p>
               Additionally you can store Integers, Float, String, JSON, PNG, JPEG data also. Try that !!
@@ -142,24 +156,6 @@
         </div>
 
       </div>
-
-    </section><!-- End Details Section -->
-
-      <div class="container py-4">
-      <a class="btn btn-outline-info"
-      href="https://github.com/sun-sharma/sun-sharma.github.io/raw/main/offloading.mp4"
-      role="button">Download Offloading Demo Video</a>
-
-      <br> <br> 
-
-      <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="assets/video/offloading.mp4" allowfullscreen></iframe>
-      </div>
-
-      </div>
-
-
-
 
     </section><!-- End Details Section -->
 
